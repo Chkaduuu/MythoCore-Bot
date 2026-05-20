@@ -1,1 +1,1 @@
-# MythoCore-Bot
+# MythosCore-Bot
