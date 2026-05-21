@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><title>AutoMod Settings</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-white">
+  <%- include('partials/navbar') %>
+  <div class="d-flex">
+    <%- include('partials/sidebar', { guildId }) %>
+    <main class="flex-grow-1 p-4">
+      <h2 class="fw-bold mb-4"><i class="fas fa-robot me-2 text-info"></i>AutoMod Settings</h2>
+      <div class="card border-0 p-4" style="background:#2b2d31; max-width:600px;">
+        <form id="automod-form">
+          <div class="mb-3 d-flex justify-content-between align-items-center">
+            <label>Anti Spam</label>
+            <div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="anti_spam" id="anti_spam" style="width:3rem;height:1.5rem;"></div>
+          </div>
+          <div class="mb-3 d-flex justify-content-between align-items-center">
+            <label>Anti Links</label>
+            <div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="anti_links" id="anti_links" style="width:3rem;height:1.5rem;"></div>
+          </div>
+          <div class="mb-3 d-flex justify-content-between align-items-center">
+            <label>Anti Discord Invites</label>
+            <div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="anti_invites" id="anti_invites" style="width:3rem;height:1.5rem;"></div>
+          </div>
+          <div class="mb-3 d-flex justify-content-between align-items-center">
+            <label>Anti Caps (>70%)</label>
+            <div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="anti_caps" id="anti_caps" style="width:3rem;height:1.5rem;"></div>
+          </div>
+          <div class="mb-3 d-flex justify-content-between align-items-center">
+            <label>Anti Mass Mention</label>
+            <div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="anti_mentions" id="anti_mentions" style="width:3rem;height:1.5rem;"></div>
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Punishment Action</label>
+            <select class="form-select bg-dark text-white border-secondary" name="action" id="action">
+              <option value="warn">Warn</option>
+              <option value="mute">Mute (10 min)</option>
+              <option value="kick">Kick</option>
+              <option value="ban">Ban</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary w-100"><i class="fas fa-save me-2"></i>Save Changes</button>
+          <div id="save-msg" class="mt-2 text-success" style="display:none;">✅ Saved!</div>
+        </form>
+      </div>
+    </main>
+  </div>
+  <script>
+    const guildId = '<%= guildId %>';
+    fetch(`/api/guild/${guildId}`).then(r=>r.json()).then(d => {
+      if (!d.automod) return;
+      const a = d.automod;
+      ['anti_spam','anti_links','anti_invites','anti_caps','anti_mentions'].forEach(f => {
+        const el = document.getElementById(f);
+        if (el) el.checked = !!a[f];
+      });
+      const action = document.getElementById('action');
+      if (action && a.action) action.value = a.action;
+    });
+    document.getElementById('automod-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target));
+      await fetch(`/api/guild/${guildId}/automod`, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+      document.getElementById('save-msg').style.display = 'block';
+      setTimeout(() => document.getElementById('save-msg').style.display = 'none', 2000);
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

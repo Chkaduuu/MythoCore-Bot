@@ -1,0 +1,22 @@
+# Deploy to Railway.app (recommended for 24/7 hosting)
+# Setup: Connect your GitHub repo to Railway.app
+# Set environment variables in Railway dashboard
+# Railway provides free tier with ~500 hours/month
+
+name: Railway Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+      - name: Deploy
+        run: railway up --detach
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}

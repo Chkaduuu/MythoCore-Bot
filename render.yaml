@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: discord-bot
+    env: node
+    buildCommand: npm install
+    startCommand: node src/bot/index.js
+    autoDeploy: true
+    envVars:
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: CLIENT_ID
+        sync: false
+      - key: CLIENT_SECRET
+        sync: false
+      - key: DB_TYPE
+        value: sqlite

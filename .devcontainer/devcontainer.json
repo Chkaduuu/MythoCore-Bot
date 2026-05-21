@@ -1,0 +1,32 @@
+{
+  "name": "Discord Bot Dev",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-json",
+        "formulahendry.code-runner",
+        "christian-kohler.path-intellisense",
+        "bradlc.vscode-tailwindcss"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+  "forwardPorts": [3000, 5000],
+  "portsAttributes": {
+    "3000": { "label": "Dashboard", "onAutoForward": "openBrowser" },
+    "5000": { "label": "API Server" }
+  },
+  "postCreateCommand": "npm install && echo '✅ Dependencies installed! Copy .env.example to .env and fill in your tokens.'",
+  "remoteUser": "node"
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Bot — Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-white">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background: #1e1f22;">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="/"><i class="fas fa-robot me-2 text-primary"></i>BotPanel</a>
+      <div class="ms-auto">
+        <% if (user) { %>
+          <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png" class="rounded-circle me-2" width="32" height="32">
+          <a href="/dashboard" class="btn btn-primary me-2">Dashboard</a>
+          <a href="/auth/logout" class="btn btn-outline-secondary">Logout</a>
+        <% } else { %>
+          <a href="/auth/login" class="btn btn-primary"><i class="fab fa-discord me-2"></i>Login with Discord</a>
+        <% } %>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="py-5 text-center" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 90vh; display:flex; align-items:center;">
+    <div class="container">
+      <div class="mb-4">
+        <i class="fas fa-robot" style="font-size: 5rem; color: #5865F2;"></i>
+      </div>
+      <h1 class="display-4 fw-bold mb-3">The Ultimate Discord Bot</h1>
+      <p class="lead text-secondary mb-4">Giveaways · Economy · Leveling · Music · AutoMod · Welcomer · Reaction Roles · And much more!</p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="/auth/login" class="btn btn-primary btn-lg px-5"><i class="fab fa-discord me-2"></i>Get Started</a>
+        <a href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=8" class="btn btn-outline-light btn-lg px-5" target="_blank">Invite Bot</a>
+      </div>
+
+      <!-- Features grid -->
+      <div class="row g-4 mt-5">
+        <% const features = [
+          { icon:'fa-shield-alt', color:'#5865F2', title:'Moderation', desc:'Ban, kick, warn, mute, purge, case history' },
+          { icon:'fa-coins', color:'#FFD700', title:'Economy', desc:'Daily, work, shop, leaderboards, transfer' },
+          { icon:'fa-star', color:'#FF6B35', title:'Leveling', desc:'XP system, rank cards, role rewards' },
+          { icon:'fa-music', color:'#1DB954', title:'Music', desc:'YouTube streaming, queue, loop, skip' },
+          { icon:'fa-gift', color:'#E91E63', title:'Giveaways', desc:'Interactive & instant giveaway setup' },
+          { icon:'fa-robot', color:'#00BCD4', title:'AutoMod', desc:'Anti-spam, links, invites, caps, mentions' },
+          { icon:'fa-door-open', color:'#9C27B0', title:'Welcomer', desc:'Custom welcome images and messages' },
+          { icon:'fa-theater-masks', color:'#FF5722', title:'Reaction Roles', desc:'Normal, unique, verify types' },
+          { icon:'fa-microphone', color:'#607D8B', title:'Temp Voice', desc:'User-managed voice channels' },
+          { icon:'fa-clipboard-list', color:'#8BC34A', title:'Applications', desc:'Custom application forms with modals' },
+          { icon:'fa-envelope', color:'#F44336', title:'Invite Tracking', desc:'Track who invites who' },
+          { icon:'fa-lightbulb', color:'#FFC107', title:'Suggestions', desc:'Upvote/downvote with buttons' },
+        ]; %>
+        <% features.forEach(f => { %>
+          <div class="col-md-4 col-lg-3">
+            <div class="card h-100 border-0" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);">
+              <div class="card-body text-center p-4">
+                <i class="fas <%= f.icon %> fa-2x mb-3" style="color: <%= f.color %>;"></i>
+                <h5 class="fw-bold"><%= f.title %></h5>
+                <p class="text-secondary small mb-0"><%= f.desc %></p>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-4 text-center text-secondary" style="background: #1e1f22;">
+    <p class="mb-0">Built with ❤️ using Discord.js v14</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

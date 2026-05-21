@@ -1,5 +1,36 @@
-node_modules/
+# Environment variables
 .env
+.env.local
+
+# Dependencies
+node_modules/
+
+# Database files
 data/
+*.sqlite
+*.sqlite3
 *.db
+
+# Logs
+logs/
 *.log
+npm-debug.log*
+
+# Build output
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# Temp
+tmp/
+temp/
+
+# Assets cache
+assets/cache/

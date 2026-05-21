@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Economy</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="/css/style.css" rel="stylesheet"></head>
+<body class="bg-dark text-white">
+<%- include('partials/navbar') %>
+<div class="d-flex">
+<%- include('partials/sidebar', { guildId }) %>
+<main class="flex-grow-1 p-4">
+  <h2 class="fw-bold mb-4"><i class="fas fa-coins me-2 text-warning"></i>Economy / Shop</h2>
+  <div class="card border-0 p-4 mb-4" style="background:#2b2d31;max-width:500px;">
+    <h5 class="fw-bold mb-3">Add Shop Item</h5>
+    <form id="add-item-form">
+      <div class="mb-3"><label class="form-label">Item Name</label><input type="text" name="name" class="form-control bg-dark text-white border-secondary" required></div>
+      <div class="mb-3"><label class="form-label">Description</label><input type="text" name="description" class="form-control bg-dark text-white border-secondary"></div>
+      <div class="mb-3"><label class="form-label">Price (coins)</label><input type="number" name="price" class="form-control bg-dark text-white border-secondary" required min="1"></div>
+      <div class="mb-3"><label class="form-label">Role ID (optional)</label><input type="text" name="role_id" class="form-control bg-dark text-white border-secondary"></div>
+      <button type="submit" class="btn btn-warning w-100">Add Item</button>
+      <div id="item-msg" class="mt-2 text-success" style="display:none;">✅ Item added!</div>
+    </form>
+  </div>
+  <h5 class="fw-bold mb-3">Current Shop Items</h5>
+  <div class="row g-3" id="shop-items"></div>
+</main></div>
+<script>
+const guildId='<%= guildId %>';
+function loadShop(){
+  fetch(`/api/guild/${guildId}/shop`).then(r=>r.json()).then(items=>{
+    document.getElementById('shop-items').innerHTML=items.map(i=>
+      `<div class="col-md-3"><div class="card border-0 p-3" style="background:#2b2d31"><h6>${i.name}</h6><p class="text-secondary small">${i.description||''}</p><div class="fw-bold text-warning">${i.price} coins</div></div></div>`
+    ).join('')||'<div class="col text-secondary">No items yet.</div>';
+  });
+}
+loadShop();
+document.getElementById('add-item-form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const data=Object.fromEntries(new FormData(e.target));
+  await fetch(`/api/guild/${guildId}/shop`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+  document.getElementById('item-msg').style.display='block';
+  setTimeout(()=>document.getElementById('item-msg').style.display='none',2000);
+  e.target.reset();loadShop();
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body></html>

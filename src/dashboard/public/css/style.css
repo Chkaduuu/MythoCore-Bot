@@ -1,0 +1,19 @@
+:root {
+  --bg-primary: #1e1f22;
+  --bg-secondary: #2b2d31;
+  --bg-tertiary: #313338;
+  --accent: #5865F2;
+  --text-muted: #949ba4;
+}
+body { background: #313338; font-family: 'Segoe UI', sans-serif; }
+.navbar { border-bottom: 1px solid rgba(255,255,255,.07); }
+.card { border-radius: 12px; }
+.nav-link { border-radius: 8px; transition: all .15s; }
+.nav-link:hover { background: rgba(255,255,255,.08); color: #fff !important; }
+.nav-link.active { background: rgba(88,101,242,.3); color: #fff !important; }
+.form-control:focus, .form-select:focus { border-color: var(--accent); box-shadow: 0 0 0 .2rem rgba(88,101,242,.25); }
+.table { --bs-table-bg: transparent; }
+.badge { font-size: .7rem; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #1e1f22; }
+::-webkit-scrollbar-thumb { background: #404249; border-radius: 3px; }
