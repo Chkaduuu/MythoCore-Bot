@@ -52,3 +52,4 @@ process.on('unhandledRejection', (error) => {
 });
 
 module.exports = client;
+require('../dashboard/server');
