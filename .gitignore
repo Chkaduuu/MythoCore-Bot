@@ -34,3 +34,4 @@ temp/
 
 # Assets cache
 assets/cache/
+.env.save
